@@ -1,0 +1,57 @@
+package com.commerce.config.authen.exceptHandler;
+
+import com.alibaba.fastjson.JSONObject;
+import com.commerce.Utils.ApiResult;
+import com.commerce.Utils.Constant;
+import com.commerce.config.authen.damain.AuthonUserDetails;
+import com.commerce.config.authen.utils.JwtUtil;
+import com.commerce.logic.baseServices.RedisService;
+import com.commerce.system.domian.User;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * Description: plodes
+ * Created by yhsh on 2020/3/19 14:30
+ * version 2.0
+ * 方法说明
+ */
+@Configuration
+public class SuccessHandler implements AuthenticationSuccessHandler {
+
+	private static final Logger logger = LoggerFactory.getLogger(SuccessHandler.class);
+
+	@Autowired
+	private RedisService redisService;
+
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+		Object principal = authentication.getPrincipal();
+		httpServletResponse.setContentType(Constant.JSONUTF8);
+		if(principal instanceof AuthonUserDetails) {
+			AuthonUserDetails userDetails = (AuthonUserDetails) principal;
+			User user = new User();
+			user.setUsername(userDetails.getUsername());
+
+			String token = JwtUtil.createJWT(user);
+			logger.error("生成得token 是: "+token);
+			String result = DigestUtils.md5Hex(token);
+			logger.error("加密得token 是: "+result);
+			redisService.set("token:"+result,token);
+			httpServletResponse.setHeader("access_token",result);
+			httpServletResponse.getWriter().write(JSONObject.toJSONString(ApiResult.ok("认证成功")));
+		}else{
+			httpServletResponse.getWriter().write(JSONObject.toJSONString(ApiResult.ok("匿名用户")));
+		}
+	}
+}

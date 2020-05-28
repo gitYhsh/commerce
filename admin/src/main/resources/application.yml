@@ -1,0 +1,85 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.2.204:3308/plodes?useUnicode=true&characterEncoding=utf8&useSSL=true&&allowMultiQueries=true&serverTimezone=UTC
+    username: root
+    password : 123456
+    initialSize: 10
+    minIdle: 20
+    maxActive: 1000
+    maxWait : 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis : 30000
+    validationQuery : SELECT 1 FROM DUAL
+    testWhileIdle : false
+    testOnBorrow : false
+    testOnReturn : false
+    poolPreparedStatements : true
+    maxPoolPreparedStatementPerConnectionSize : 20
+    filters: stat,wall,log4j2
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  cache:
+    type: redis
+  redis:
+    host: 192.168.2.204
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 1000
+        max-idle: 8
+        max-wait: 1000
+    timeout: 30000
+    database: 2
+logging:
+  config: classpath:log4j2.xml
+  file:
+    max-history: 7
+pagehelper:
+  helper-dialect: MariaDB
+  reasonable: true
+  support-methods-arguments: true
+  params:
+    count : countSql
+# ====================MybatisPlus====================
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  #typeAliasesPackage: com..**.entity,com.frame.**.dto
+  global-config:
+    #刷新mapper
+    db-config:
+      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+      id-type: UUID
+      #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: 2
+      #驼峰下划线转换
+      column-underline: false
+      #数据库大写下划线转换
+      # capital-mode: true
+      #逻辑删除配置
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+    refresh: true
+  configuration:
+    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+xlcxx:
+  #是否在console 数据 sql执行语句
+  showsql: true
+  security:
+    #未认证路径
+    login-url: /login
+    #记住我有效时间，单位为秒
+    remember-me-timeout: 3600
+    #登陆验证路径
+    login-processing-url: /login/form
+    #最大并发量
+    max-login-num : 1
+    #免认证
+    anon-resources-url : /sms/code,/image/code,/oauth/login/qq,/doc.html,/oauth/login/wechat
