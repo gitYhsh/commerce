@@ -4,12 +4,12 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.8.187:8848
+        server-addr: 47.92.1.148:8848
     gateway:
       discovery:
         locator:
+          # 配置路由规则
           enabled: true
-      # 配置路由规则
       routes:
         # 采用自定义路由 ID（有固定用法，不同的 id 有不同的功能，详见：https://cloud.spring.io/spring-cloud-gateway/2.0.x/single/spring-cloud-gateway.html#gateway-route-filters）
         - id: consumer
