@@ -1,20 +1,21 @@
 package com.commerce;
 
-/**
- * Description: nocos_test
- * Created by yhsh on 2020/3/17 14:13
- * version 2.0
- * 方法说明
- */
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+/**
+ * @Author:yhsh
+ * @Date:Create in 17:06 2020/6/22
+ * @des: 类描述
+ **/
 @SpringBootApplication
 @EnableDiscoveryClient
-public class Application {
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+public class CusApplocation {
+
+    public static void main(String[] args) {
+        SpringApplication.run(CusApplocation.class, args);
+    }
+
+
 }

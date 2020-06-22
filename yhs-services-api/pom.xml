@@ -8,13 +8,6 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>yhs-module</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>yhs-uns</module>
-        <module>yhs-cus</module>
-    </modules>
-
+    <artifactId>yhs-services-api</artifactId>
 
 </project>

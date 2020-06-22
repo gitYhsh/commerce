@@ -1,0 +1,9 @@
+server:
+  port: 8888
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.92.1.148:8848
+  application:
+    name: cus
