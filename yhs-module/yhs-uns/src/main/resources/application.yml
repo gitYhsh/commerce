@@ -1,0 +1,9 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: uns
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.92.1.148:8848
