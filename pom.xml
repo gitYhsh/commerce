@@ -9,9 +9,10 @@
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
-        <module>getaway</module>
-        <module>common</module>
+        <module>yhs-router</module>
+        <module>yhs-common</module>
         <module>admin</module>
+        <module>yhs-module</module>
     </modules>
     
     <parent>
